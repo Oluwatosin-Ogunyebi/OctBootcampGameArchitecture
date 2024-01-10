@@ -19,6 +19,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float gravity = -9.81f;
     [SerializeField] private float jumpVelocity;
 
+    [Header("Player Shoot")]
+    [SerializeField] private Rigidbody bulletPrefab;
+    [SerializeField] private Rigidbody rocketPrefab;
+    [SerializeField] private float shootForce;
+    [SerializeField] private Transform shootPoint;
+
     private CharacterController characterController;
     private float horizontalInput, verticalInput;
     private float mouseX, mouseY;
@@ -47,6 +53,8 @@ public class PlayerController : MonoBehaviour
         GroundCheck();
         MovePlayer();
         JumpCheck();
+
+        Shoot();
     }
 
     private void GetInput()
@@ -106,5 +114,23 @@ public class PlayerController : MonoBehaviour
         Gizmos.color = Color.black;
 
         Gizmos.DrawSphere(groundCheck.position, groundCheckDistance);
+    }
+
+    private void Shoot()
+    {
+        if (Input.GetButtonDown("Fire1"))
+        {
+            Rigidbody bullet = Instantiate(bulletPrefab, shootPoint.position, shootPoint.rotation);
+            bullet.AddForce(shootPoint.forward * shootForce, ForceMode.Impulse);
+            Destroy(bullet.gameObject, 5.0f);
+        }
+
+        if (Input.GetButtonDown("Fire2"))
+        {
+            Rigidbody bullet = Instantiate(rocketPrefab, shootPoint.position, shootPoint.rotation);
+            bullet.AddForce(shootPoint.forward * shootForce, ForceMode.Impulse);
+            Destroy(bullet.gameObject, 5.0f);
+        }
+
     }
 }
