@@ -11,5 +11,7 @@ public class Bullet : MonoBehaviour
         {
             destroyable.OnCollided();
         }
+
+        Destroy(gameObject);
     }
 }

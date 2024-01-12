@@ -25,6 +25,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float shootForce;
     [SerializeField] private Transform shootPoint;
 
+    [Header("Interaction")]
+    [SerializeField] private Camera cam;
+    [SerializeField] private LayerMask layerMask;
+    [SerializeField] private float interactionDistance;
+
     private CharacterController characterController;
     private float horizontalInput, verticalInput;
     private float mouseX, mouseY;
@@ -32,6 +37,10 @@ public class PlayerController : MonoBehaviour
     private float camXRotation;
     private bool isGrounded;
     private Vector3 playerVelocity;
+
+    //Interaction Raycasts
+    private RaycastHit hit;
+    private ISelectable selection;
     private void Awake()
     {
         characterController = GetComponent<CharacterController>();
@@ -55,6 +64,7 @@ public class PlayerController : MonoBehaviour
         JumpCheck();
 
         Shoot();
+        Interact();
     }
 
     private void GetInput()
@@ -133,4 +143,32 @@ public class PlayerController : MonoBehaviour
         }
 
     }
+
+    private void Interact()
+    {
+        //Cast a ray from middle of camera
+        Ray ray = cam.ScreenPointToRay(new Vector3(Screen.width/2, Screen.height/2));
+        if (Physics.Raycast(ray, out hit, interactionDistance, layerMask))
+        {
+            Debug.Log("We hit " + hit.collider.name);
+            Debug.DrawRay(ray.origin, ray.direction * interactionDistance, Color.red);
+
+            selection = hit.transform.GetComponent<ISelectable>();
+            if (selection != null)
+            {
+                selection.OnHoverEnter();
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    selection.OnSelect();
+                }
+            }
+        }
+
+        if (hit.transform == null && selection != null)
+        {
+            selection.OnHoverExit();
+            selection = null;
+        }
+    }
+
 }

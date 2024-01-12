@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Door : MonoBehaviour
+public class LiftDoor : MonoBehaviour
 {
     private Animator doorAnim;
 
@@ -13,7 +13,7 @@ public class Door : MonoBehaviour
 
 
     [SerializeField] private float waitTime = 1.0f;
-
+    [SerializeField] private Lift lift;
 
     private void Awake()
     {
@@ -24,9 +24,10 @@ public class Door : MonoBehaviour
         }
     }
     private void OnTriggerEnter(Collider other)
-    {
+    {   
+        if (lift.GetLiftMovement()) { return; }
         if (other.CompareTag("Player"))
-        {   
+        {
             timer = 0;
             doorRenderer.material.color = activeColor;
             //doorAnim.SetBool("isDoorOpen", true);
@@ -35,6 +36,8 @@ public class Door : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
+        if (lift.GetLiftMovement()) { return; }
+
         if (!other.CompareTag("Player")) { return; } //Guard clause to exit if not player
         timer += Time.deltaTime;
 
@@ -48,6 +51,7 @@ public class Door : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        if (lift.GetLiftMovement()) { return; }
         if (other.CompareTag("Player"))
         {
             doorAnim.SetBool("isDoorOpen", false);
