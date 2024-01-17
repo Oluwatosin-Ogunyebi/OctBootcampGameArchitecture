@@ -14,6 +14,7 @@ public class Door : MonoBehaviour
 
     [SerializeField] private float waitTime = 1.0f;
 
+    private bool isLocked = true;
 
     private void Awake()
     {
@@ -25,7 +26,7 @@ public class Door : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (!isLocked && other.CompareTag("Player"))
         {   
             timer = 0;
             doorRenderer.material.color = activeColor;
@@ -35,6 +36,7 @@ public class Door : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
+        if (isLocked) { return; }
         if (!other.CompareTag("Player")) { return; } //Guard clause to exit if not player
         timer += Time.deltaTime;
 
@@ -42,7 +44,7 @@ public class Door : MonoBehaviour
         {
             timer = waitTime;
             doorAnim.SetBool("isDoorOpen", true);
-            waitTime *= 1.5f;
+            
         }
     }
 
@@ -53,5 +55,15 @@ public class Door : MonoBehaviour
             doorAnim.SetBool("isDoorOpen", false);
             doorRenderer.material.color = defaultColor;
         }
+    }
+
+    public void LockDoor()
+    {
+        isLocked = true;
+    }
+    
+    public void UnlockDoor()
+    {
+        isLocked = false;
     }
 }

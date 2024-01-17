@@ -25,10 +25,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float shootForce;
     [SerializeField] private Transform shootPoint;
 
-    [Header("Interaction")]
+    [Header("Select Interaction")]
     [SerializeField] private Camera cam;
-    [SerializeField] private LayerMask layerMask;
+    [SerializeField] private LayerMask interactionLayerMask;
     [SerializeField] private float interactionDistance;
+
+    [Header("Pickup Interaction")]
+    [SerializeField] private LayerMask pickupLayerMask;
+    [SerializeField] private float pickupDistance;
+    [SerializeField] private Transform attachTransform;
 
     private CharacterController characterController;
     private float horizontalInput, verticalInput;
@@ -41,6 +46,9 @@ public class PlayerController : MonoBehaviour
     //Interaction Raycasts
     private RaycastHit hit;
     private ISelectable selection;
+    private IPickable pickable;
+
+    private bool isPicked = false;
     private void Awake()
     {
         characterController = GetComponent<CharacterController>();
@@ -65,6 +73,7 @@ public class PlayerController : MonoBehaviour
 
         Shoot();
         Interact();
+        PickAndDrop();
     }
 
     private void GetInput()
@@ -148,7 +157,7 @@ public class PlayerController : MonoBehaviour
     {
         //Cast a ray from middle of camera
         Ray ray = cam.ScreenPointToRay(new Vector3(Screen.width/2, Screen.height/2));
-        if (Physics.Raycast(ray, out hit, interactionDistance, layerMask))
+        if (Physics.Raycast(ray, out hit, interactionDistance, interactionLayerMask))
         {
             Debug.Log("We hit " + hit.collider.name);
             Debug.DrawRay(ray.origin, ray.direction * interactionDistance, Color.red);
@@ -171,4 +180,34 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+
+    private void PickAndDrop()
+    {
+        //Cast a ray
+        if (Physics.Raycast(GetCamRay(), out hit,pickupDistance, pickupLayerMask))
+        {
+            if (Input.GetKeyDown(KeyCode.E)  && !isPicked)
+            {
+                pickable = hit.transform.GetComponent<IPickable>();
+                if (pickable == null) return;
+
+                pickable.OnPicked(attachTransform);
+                isPicked = true;
+                return;
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.E) && isPicked && pickable != null)
+        {
+            pickable.OnDropped();
+            isPicked = false;
+        }
+    }
+
+    private Ray GetCamRay()
+    {
+        Ray ray = cam.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
+
+        return ray;
+    }
 }
