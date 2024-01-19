@@ -1429,6 +1429,51 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 224406317}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &273451263
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 273451265}
+  - component: {fileID: 273451264}
+  m_Layer: 0
+  m_Name: PlayerInput
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &273451264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 273451263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 268b14f1d7191d641aaf22b90ad11aec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clear: 0
+--- !u!4 &273451265
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 273451263}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 17
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &304696308
 GameObject:
   m_ObjectHideFlags: 0
@@ -1695,6 +1740,7 @@ GameObject:
   - component: {fileID: 330585545}
   - component: {fileID: 330585544}
   - component: {fileID: 330585547}
+  - component: {fileID: 330585548}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1803,6 +1849,21 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
+--- !u!114 &330585548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 330585543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c454f844d24ab7245a7984de612578d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerInput: {fileID: 273451264}
+  turnSpeed: 10
+  invertMouse: 0
 --- !u!1 &408651003
 GameObject:
   m_ObjectHideFlags: 0
@@ -2059,6 +2120,12 @@ GameObject:
   m_Component:
   - component: {fileID: 475697809}
   - component: {fileID: 475697808}
+  - component: {fileID: 475697816}
+  - component: {fileID: 475697815}
+  - component: {fileID: 475697814}
+  - component: {fileID: 475697813}
+  - component: {fileID: 475697812}
+  - component: {fileID: 475697811}
   - component: {fileID: 475697810}
   m_Layer: 0
   m_Name: Player
@@ -2113,37 +2180,121 @@ MonoBehaviour:
   m_GameObject: {fileID: 475697807}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d936bb2557d738b4689dea68c15964de, type: 3}
+  m_Script: {fileID: 11500000, guid: f77c9a83a786dd94988d3ceb82330e5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 10
-  turnSpeed: 180
-  cameraTransform: {fileID: 330585546}
-  invertMouse: 0
-  sprintMultiplier: 2
-  groundCheck: {fileID: 1816131796}
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 8
-  groundCheckDistance: 0.1
-  gravity: -9.81
-  jumpVelocity: 7
+  playerInput: {fileID: 273451264}
+  bulletPrefab: {fileID: 7138912465136525251, guid: a1be76233350fcc458bb7ed18f0b0cd1,
+    type: 3}
+  shootVelocity: 50
+  shootPoint: {fileID: 105478980}
+  playerMovementBehaviour: {fileID: 475697816}
+  inputType: 1
+--- !u!114 &475697811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 475697807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f77c9a83a786dd94988d3ceb82330e5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerInput: {fileID: 273451264}
   bulletPrefab: {fileID: 1178805367918217002, guid: da157f7a41c51474fb62d231bbf0e1f2,
     type: 3}
-  rocketPrefab: {fileID: 7138912465136525251, guid: a1be76233350fcc458bb7ed18f0b0cd1,
-    type: 3}
-  shootForce: 20
+  shootVelocity: 20
   shootPoint: {fileID: 105478980}
+  playerMovementBehaviour: {fileID: 475697816}
+  inputType: 0
+--- !u!114 &475697812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 475697807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5250b57f621dd6245887d337d6073475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerInput: {fileID: 273451264}
   cam: {fileID: 330585545}
   interactionLayerMask:
     serializedVersion: 2
     m_Bits: 1024
   interactionDistance: 2
+--- !u!114 &475697813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 475697807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 187221da433cefa47b70232458e09772, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerInput: {fileID: 273451264}
+  cam: {fileID: 330585545}
   pickupLayerMask:
     serializedVersion: 2
     m_Bits: 2048
   pickupDistance: 2
   attachTransform: {fileID: 109753881}
+--- !u!114 &475697814
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 475697807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e25bba96bac940843be63b6d2cf6956c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerInput: {fileID: 273451264}
+  turnSpeed: 10
+--- !u!114 &475697815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 475697807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c01991d98a193045a7c8cf60d41412a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerInput: {fileID: 273451264}
+  jumpVelocity: 7
+--- !u!114 &475697816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 475697807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c0a0ef62a421d443bce2344bdc811e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerInput: {fileID: 273451264}
+  moveSpeed: 10
+  sprintMultiplier: 2
+  gravity: -9.81
+  groundCheck: {fileID: 1816131796}
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 8
+  groundCheckDistance: 0.1
 --- !u!1 &476561134
 GameObject:
   m_ObjectHideFlags: 0

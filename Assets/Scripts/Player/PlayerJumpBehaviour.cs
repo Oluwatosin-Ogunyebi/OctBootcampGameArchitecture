@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerMovementBehaviour))]
-public class PlayerJumpBehaviour : MonoBehaviour
+public class PlayerJumpBehaviour : Interactor
 {
-    [SerializeField] PlayerInput playerInput;
 
     [Header("Player Jump")]
     [SerializeField] private float jumpVelocity;
@@ -18,13 +17,7 @@ public class PlayerJumpBehaviour : MonoBehaviour
         playerMovementBehaviour = GetComponent<PlayerMovementBehaviour>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        JumpCheck();
-    }
-
-    private void JumpCheck()
+    public override void Interact()
     {
         if (playerInput.jumPressed && playerMovementBehaviour.isGrounded)
         {

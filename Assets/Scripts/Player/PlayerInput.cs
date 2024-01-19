@@ -13,9 +13,12 @@ public class PlayerInput : MonoBehaviour
     public bool sprintHeld { get; private set; }
 
     public bool jumPressed { get; private set; }
+    public bool primaryButtonPressed { get; private set; } //Left Click
+    public bool secondaryButtonPressed { get; private set; } //Right Click
+    public bool activatePressed { get; private set; }
 
 
-
+    public bool clear;
 
     // Start is called before the first frame update
     void Start()
@@ -25,7 +28,8 @@ public class PlayerInput : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
+    {   
+        ClearInputs();
         ProcessInputs();
     }
 
@@ -38,5 +42,31 @@ public class PlayerInput : MonoBehaviour
 
         sprintHeld = sprintHeld || Input.GetButton("Sprint");
         jumPressed = jumPressed || Input.GetButtonDown("Jump");
+
+        activatePressed = activatePressed || Input.GetKeyDown(KeyCode.E);
+        primaryButtonPressed = primaryButtonPressed || Input.GetButtonDown("Fire1");
+        secondaryButtonPressed = secondaryButtonPressed || Input.GetButtonDown("Fire2");
+    }
+    private void FixedUpdate()
+    {
+        clear = true;
+    }
+
+    void ClearInputs()
+    {
+        if (!clear) return;
+
+        horizontal = 0;
+        vertical = 0;
+        mouseX = 0;
+        mouseY = 0;
+
+        sprintHeld = false;
+        jumPressed = false;
+
+        activatePressed = false;
+        primaryButtonPressed = false;
+        secondaryButtonPressed = false;
+
     }
 }

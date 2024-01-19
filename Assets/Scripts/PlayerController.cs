@@ -20,10 +20,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float jumpVelocity; //Y
 
     [Header("Player Shoot")]
-    [SerializeField] private Rigidbody bulletPrefab;
-    [SerializeField] private Rigidbody rocketPrefab;
-    [SerializeField] private float shootForce;
-    [SerializeField] private Transform shootPoint;
+    [SerializeField] private Rigidbody bulletPrefab; //Y
+    [SerializeField] private Rigidbody rocketPrefab; //-
+    [SerializeField] private float shootForce; //Y
+    [SerializeField] private Transform shootPoint; //Y
 
     [Header("Select Interaction")]
     [SerializeField] private Camera cam;
@@ -31,9 +31,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float interactionDistance;
 
     [Header("Pickup Interaction")]
-    [SerializeField] private LayerMask pickupLayerMask;
-    [SerializeField] private float pickupDistance;
-    [SerializeField] private Transform attachTransform;
+    [SerializeField] private LayerMask pickupLayerMask; //Y
+    [SerializeField] private float pickupDistance; //Y
+    [SerializeField] private Transform attachTransform; //Y
 
     private CharacterController characterController; //Y
     private float horizontalInput, verticalInput; //Y
@@ -44,11 +44,11 @@ public class PlayerController : MonoBehaviour
     private Vector3 playerVelocity; //Y
 
     //Interaction Raycasts
-    private RaycastHit hit;
-    private ISelectable selection;
-    private IPickable pickable;
+    private RaycastHit hit; //Y
+    private ISelectable selection; //Y
+    private IPickable pickable; //Y
 
-    private bool isPicked = false;
+    private bool isPicked = false; //Y
     private void Awake()
     {
         characterController = GetComponent<CharacterController>(); //Y
@@ -112,7 +112,7 @@ public class PlayerController : MonoBehaviour
         camXRotation = Mathf.Clamp(camXRotation, -50.0f, 50.0f);
 
         cameraTransform.localRotation = Quaternion.Euler(camXRotation, 0, 0);
-    }
+    }//Y
 
     private void GroundCheck()
     {
@@ -151,7 +151,7 @@ public class PlayerController : MonoBehaviour
             Destroy(bullet.gameObject, 5.0f);
         }
 
-    }
+    }//Y
 
     private void Interact()
     {
@@ -178,7 +178,7 @@ public class PlayerController : MonoBehaviour
             selection.OnHoverExit();
             selection = null;
         }
-    }
+    } //Y
 
 
     private void PickAndDrop()
@@ -202,12 +202,12 @@ public class PlayerController : MonoBehaviour
             pickable.OnDropped();
             isPicked = false;
         }
-    }
+    } //Y
 
     private Ray GetCamRay()
     {
         Ray ray = cam.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
 
         return ray;
-    }
+    }  //Y
 }
