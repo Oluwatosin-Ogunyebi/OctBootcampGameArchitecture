@@ -5,19 +5,19 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [Header("Player Movement")]
-    [SerializeField] private float moveSpeed = 10.0f;
-    [SerializeField] private float turnSpeed = 10.0f;
-    [SerializeField] private Transform cameraTransform;
-    [SerializeField] private bool invertMouse;
-    [SerializeField] private float  sprintMultiplier =2;
+    [SerializeField] private float moveSpeed = 10.0f; //Y
+    [SerializeField] private float turnSpeed = 10.0f; //Y
+    [SerializeField] private Transform cameraTransform; //-
+    [SerializeField] private bool invertMouse; //Y
+    [SerializeField] private float  sprintMultiplier =2; //Y
 
 
     [Header("Player Jump")]
-    [SerializeField] private Transform groundCheck;
-    [SerializeField] private LayerMask groundMask;
-    [SerializeField] private float groundCheckDistance;
-    [SerializeField] private float gravity = -9.81f;
-    [SerializeField] private float jumpVelocity;
+    [SerializeField] private Transform groundCheck; //Y
+    [SerializeField] private LayerMask groundMask; //Y
+    [SerializeField] private float groundCheckDistance; //Y
+    [SerializeField] private float gravity = -9.81f; //Y
+    [SerializeField] private float jumpVelocity; //Y
 
     [Header("Player Shoot")]
     [SerializeField] private Rigidbody bulletPrefab;
@@ -35,13 +35,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float pickupDistance;
     [SerializeField] private Transform attachTransform;
 
-    private CharacterController characterController;
-    private float horizontalInput, verticalInput;
-    private float mouseX, mouseY;
-    private float moveMultiplier = 1.0f;
-    private float camXRotation;
-    private bool isGrounded;
-    private Vector3 playerVelocity;
+    private CharacterController characterController; //Y
+    private float horizontalInput, verticalInput; //Y
+    private float mouseX, mouseY; //Y
+    private float moveMultiplier = 1.0f; //Y
+    private float camXRotation; //Y
+    private bool isGrounded; //Y
+    private Vector3 playerVelocity; //Y
 
     //Interaction Raycasts
     private RaycastHit hit;
@@ -51,15 +51,15 @@ public class PlayerController : MonoBehaviour
     private bool isPicked = false;
     private void Awake()
     {
-        characterController = GetComponent<CharacterController>();
-    }
+        characterController = GetComponent<CharacterController>(); //Y
+    } //Y
     // Start is called before the first frame update
     void Start()
     {
         //Hide Mouse
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-    }
+    } //Y
 
     // Update is called once per frame
     void Update()
@@ -78,13 +78,13 @@ public class PlayerController : MonoBehaviour
 
     private void GetInput()
     {
-        horizontalInput = Input.GetAxis("Horizontal");
-        verticalInput = Input.GetAxis("Vertical");
-        mouseX = Input.GetAxis("Mouse X");
-        mouseY = Input.GetAxis("Mouse Y");
-        moveMultiplier = Input.GetButton("Sprint") ? sprintMultiplier : 1.0f;
+        horizontalInput = Input.GetAxis("Horizontal"); //Y
+        verticalInput = Input.GetAxis("Vertical"); //Y
+        mouseX = Input.GetAxis("Mouse X"); //Y
+        mouseY = Input.GetAxis("Mouse Y"); //Y
+        moveMultiplier = Input.GetButton("Sprint") ? sprintMultiplier : 1.0f; //Y
 
-    }
+    } //Y
 
     private void MovePlayer()
     {
@@ -100,12 +100,12 @@ public class PlayerController : MonoBehaviour
         playerVelocity.y += gravity * Time.deltaTime;
 
         characterController.Move(playerVelocity * Time.deltaTime);
-    }
+    } //Y
 
     private void RotatePlayer()
     {
         //Player turn movement
-        transform.Rotate(Vector3.up * turnSpeed * Time.deltaTime * mouseX);
+        transform.Rotate(Vector3.up * turnSpeed * Time.deltaTime * mouseX); //Y
 
         //Camera upo/down movement
         camXRotation += Time.deltaTime * mouseY * turnSpeed * (invertMouse ? 1 : -1);
@@ -117,7 +117,7 @@ public class PlayerController : MonoBehaviour
     private void GroundCheck()
     {
         isGrounded = Physics.CheckSphere(groundCheck.position, groundCheckDistance, groundMask);
-    }
+    } //Y
 
     private void JumpCheck()
     {
@@ -126,7 +126,7 @@ public class PlayerController : MonoBehaviour
             playerVelocity.y = jumpVelocity;
         }
 
-    }
+    } //Y
 
     private void OnDrawGizmos()
     {
