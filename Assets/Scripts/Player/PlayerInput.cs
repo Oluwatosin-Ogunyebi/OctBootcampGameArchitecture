@@ -20,6 +20,23 @@ public class PlayerInput : MonoBehaviour
 
     public bool clear;
 
+    //Singleton
+    private static PlayerInput instance;
+
+    public static PlayerInput GetInstance()
+    {
+        return instance;
+    }
+
+    private void Awake()
+    {
+        if (instance != null && instance != this)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+        instance = this;
+    }
     // Start is called before the first frame update
     void Start()
     {

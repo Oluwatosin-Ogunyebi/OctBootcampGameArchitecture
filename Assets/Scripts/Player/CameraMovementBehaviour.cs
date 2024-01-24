@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Camera))]
 public class CameraMovementBehaviour : MonoBehaviour
 {
-    [SerializeField] private PlayerInput playerInput;
+    private PlayerInput playerInput;
 
     [Header("Player Camera Movement")]
     [SerializeField] private float turnSpeed = 10.0f;
@@ -18,6 +18,8 @@ public class CameraMovementBehaviour : MonoBehaviour
         //Hide Mouse
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        playerInput = PlayerInput.GetInstance();
     }
 
     // Update is called once per frame

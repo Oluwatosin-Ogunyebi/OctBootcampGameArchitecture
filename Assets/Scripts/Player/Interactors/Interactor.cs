@@ -4,7 +4,12 @@ using UnityEngine;
 
 public abstract class Interactor : MonoBehaviour
 {
-    [SerializeField] protected PlayerInput playerInput;
+    protected PlayerInput playerInput;
+
+    private void Start()
+    {
+        playerInput = PlayerInput.GetInstance();
+    }
     void Update()
     {
         Interact(); 

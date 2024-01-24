@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerMovementBehaviour : MonoBehaviour
 {
-    [SerializeField] PlayerInput playerInput;
+    private PlayerInput playerInput;
 
     [Header("Player Movement")]
     [SerializeField] private float moveSpeed = 10.0f;
@@ -25,6 +25,8 @@ public class PlayerMovementBehaviour : MonoBehaviour
     void Awake()
     {
         characterController = GetComponent<CharacterController>();
+
+        playerInput = PlayerInput.GetInstance();
     }
 
     // Update is called once per frame
