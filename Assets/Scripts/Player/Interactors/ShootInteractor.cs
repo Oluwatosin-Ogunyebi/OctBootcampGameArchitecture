@@ -19,6 +19,11 @@ public class ShootInteractor : Interactor
         Primary,
         Secondary,
     }
+
+    public Transform GetShootPoint()
+    {
+        return shootPoint;
+    }
     public override void Interact()
     {
         if (inputType == InputType.Primary && playerInput.primaryButtonPressed

@@ -8919,6 +8919,7 @@ GameObject:
   - component: {fileID: 1640482469}
   - component: {fileID: 1640482468}
   - component: {fileID: 1640482467}
+  - component: {fileID: 1640482471}
   m_Layer: 12
   m_Name: EnemyObject
   m_TagString: Untagged
@@ -8933,7 +8934,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1640482466}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 44fca00fb7120e64a93fcf2f336b9f2f, type: 3}
   m_Name: 
@@ -9003,6 +9004,31 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1640482471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1640482466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7caf5fcd1977e6e489644abaeb2ba9eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetPoints: []
+  targetPointsParent: {fileID: 745011119}
+  accuracy: 0.1
+  waitTime: 1
+  isRandom: 0
+  enemyEye: {fileID: 109079431}
+  checkRadius: 0.4
+  playerDistance: 4
+  followRange: 10
+  attackRange: 2
+  player: {fileID: 0}
+  agent: {fileID: 0}
+  debugColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!1 &1691101285
 GameObject:
   m_ObjectHideFlags: 0
