@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class EnemyAttackState : EnemyState
 {
+    Health playerHealth;
+    float damagePerSecond = 20f;
     public EnemyAttackState(EnemyController enemy): base(enemy)
     {
-
+        //Grab health component of player
+        playerHealth = enemy.player.GetComponent<Health>();
     }
     public override void OnStateEnter()
     {
@@ -19,6 +22,7 @@ public class EnemyAttackState : EnemyState
     }
     public override void OnStateUpdate()
     {
+        Attack();
         if (enemy.player != null)
         {
 
@@ -35,6 +39,14 @@ public class EnemyAttackState : EnemyState
         {
             //Go back to Idle
             enemy.ChangeState(new EnemyIdleState(enemy));
+        }
+    }
+
+    private void Attack()
+    {
+        if (playerHealth != null)
+        {
+            playerHealth.DeductHealth(damagePerSecond * Time.deltaTime);
         }
     }
 

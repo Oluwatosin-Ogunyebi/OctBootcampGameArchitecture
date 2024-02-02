@@ -17,6 +17,9 @@ public class PlayerInput : MonoBehaviour
     public bool secondaryButtonPressed { get; private set; } //Right Click
     public bool activatePressed { get; private set; }
 
+    public bool weapon1Pressed { get; private set; }
+    public bool weapon2Pressed { get; private set; }
+    public bool commandPressed { get; private set; }
 
     public bool clear;
 
@@ -63,6 +66,11 @@ public class PlayerInput : MonoBehaviour
         activatePressed = activatePressed || Input.GetKeyDown(KeyCode.E);
         primaryButtonPressed = primaryButtonPressed || Input.GetButtonDown("Fire1");
         secondaryButtonPressed = secondaryButtonPressed || Input.GetButtonDown("Fire2");
+
+        weapon1Pressed = weapon1Pressed || Input.GetKeyDown(KeyCode.Alpha1);
+        weapon2Pressed = weapon2Pressed || Input.GetKeyDown(KeyCode.Alpha2);
+        commandPressed = commandPressed || Input.GetKeyDown(KeyCode.G);
+
     }
     private void FixedUpdate()
     {
@@ -84,6 +92,12 @@ public class PlayerInput : MonoBehaviour
         activatePressed = false;
         primaryButtonPressed = false;
         secondaryButtonPressed = false;
+
+        weapon1Pressed = false;
+        weapon2Pressed = false;
+
+        commandPressed = false;
+
 
     }
 }

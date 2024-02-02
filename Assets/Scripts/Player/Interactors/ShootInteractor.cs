@@ -4,14 +4,24 @@ using UnityEngine;
 
 public class ShootInteractor : Interactor
 {
+    [Header("Gun")]
+    public MeshRenderer gunRenderer;
+    public Color bulletGunColor;
+    public Color rocketGunColor;
+
     [Header("Player Shoot")]
-    [SerializeField] private ObjectPool pool;
+    public ObjectPool bulletPool;
+    public ObjectPool rocketPool;
+
+
+
     [SerializeField] private Rigidbody bulletPrefab;
     [SerializeField] private float shootVelocity;
     [SerializeField] private Transform shootPoint;
     [SerializeField] private PlayerMovementBehaviour playerMovementBehaviour;
 
     private float finalShootVelocity;
+    private IShootStrategy currentShootStrategy;
 
     [SerializeField] private InputType inputType;
     public enum InputType
@@ -26,29 +36,33 @@ public class ShootInteractor : Interactor
     }
     public override void Interact()
     {
-        if (inputType == InputType.Primary && playerInput.primaryButtonPressed
-            || inputType == InputType.Secondary && playerInput.secondaryButtonPressed)
+        if (currentShootStrategy == null)
         {
-            Shoot();
+            currentShootStrategy = new BulletShootStrategy(this);
+        }
+
+        //Change Strategy
+        if (playerInput.weapon1Pressed)
+        {
+            currentShootStrategy = new BulletShootStrategy(this);
+        }
+
+        if (playerInput.weapon2Pressed)
+        {
+            currentShootStrategy = new RocketShootStrategy(this);
+        }
+
+        //Shoot with selected strategy
+
+        if (playerInput.primaryButtonPressed && currentShootStrategy != null)
+        {
+            currentShootStrategy.Shoot();
         }
     }
 
-    private void Shoot()
+    public float GetShootVelocity()
     {
         finalShootVelocity = playerMovementBehaviour.GetForwardSpeed() + shootVelocity;
-
-        PooledObject pooledObject = pool.GetPooledObject();
-        pooledObject.gameObject.SetActive(true);
-
-        //Rigidbody bullet = Instantiate(bulletPrefab, shootPoint.position, shootPoint.rotation);
-        Rigidbody bullet = pooledObject.GetComponent<Rigidbody>();
-        bullet.transform.position = shootPoint.position;
-        bullet.transform.rotation = shootPoint.rotation;
-
-        bullet.velocity = shootPoint.forward * finalShootVelocity;
-
-        pool.DestroyObjectFromPool(pooledObject, 5.0f);
-        //Destroy(bullet.gameObject, 5.0f);
-
+        return finalShootVelocity;
     }
 }
