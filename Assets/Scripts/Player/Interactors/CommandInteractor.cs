@@ -32,6 +32,8 @@ public class CommandInteractor : Interactor
                 }
             }
         }
+
+        ProcessCommands();
     }
 
     void ProcessCommands()
